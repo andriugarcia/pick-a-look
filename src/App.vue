@@ -9,8 +9,8 @@
         v-menu(offset-y, v-if="logged")
           template(v-slot:activator="{on}")
             div(style="border: 3px solid #1c1c1c; border-radius: 50%", v-on="on")
-              v-avatar(color="grey", :size="36", v-ripple)
-                v-img(src="https://pbs.twimg.com/profile_images/1244615197517656064/ikvdr5DS_400x400.jpg")
+              v-avatar(color="#f50057", :size="36", v-ripple)
+                .font-weight-bold A
           v-list
             v-list-item(@click="logout")
               div Cerrar Sesión

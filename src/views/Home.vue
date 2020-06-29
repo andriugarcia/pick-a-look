@@ -1,50 +1,73 @@
 <template lang="pug">
   #Home
-    //- #desktop(v-if="$vuetify.breakpoint.mdAndUp")
-      v-layout(v-if="cards.length != 0")
-        v-flex(md4)
-          v-img.mx-2(:src="cards[0].pictures[0]", style="height: 100vh")
-        v-flex(md3)
-          v-img.ml-2.mb-2(:src="cards[0].pictures[1]", style="height: 50vh")
-          v-img.ml-2.mt-2(:src="cards[0].pictures[2]", style="height: 50vh")
+    #desktop(v-if="$vuetify.breakpoint.mdAndUp")
+      v-layout(v-if="logged")
+        masonry(:cols="{default: 2, 400: 1}", style="height: 100vh; width: 60%")
+          v-img.ma-4(:src="cards[0].pictures[0]")
+          v-img.ma-4(:src="cards[0].pictures[1]")
+          v-img.ma-4(:src="cards[0].pictures[2]")
         v-flex.text-left.pa-6(md5, style="position: relative")
           v-layout(align-center)
             h1 {{ cards[0].brand }}
             v-spacer
-            v-btn.mx-3.mr-4(icon, color="tyellow",:disabled="buttonsDisabled", @click="fav")
-              v-icon {{favorite ? 'fas' : 'far'}} fa-star
             .py-3.px-4(v-if="cards[0].price != '0€'", style="background-color: black; border-radius: 25px 0 0 25px;", align-center)
               h3.white--text {{cards[0].price}}
           h3.mt-4 {{ cards[0].name }}
           .mt-4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          v-btn.mt-4(rounded, color="tblue", @click="buy", large, dark, block, depressed, style="height: 60px")
-            v-icon.mr-2 fas fa-shopping-cart
-            .text-capitalize Ver en Amazon
-          v-layout.pr-12(style="position: absolute; bottom: 48px; width: 100%")
-            v-flex(xs6)
-              v-btn(outlined, color="tred", @click="rejectAndPop", style="border: 4px solid #F44336; width: 100%; height: 60px; border-radius: 40px 0 0 40px")
-                v-icon far fa-thumbs-down
-            v-flex(xs6)
-              v-btn(outlined, color="tgreen", @click="acceptAndPop", style="border: 4px solid #4CAF50; width: 100%; height: 60px; border-radius: 0 40px 40px 0")
-                v-icon far fa-thumbs-up
+          div(style="position: absolute; bottom: 64px")  
+            v-layout.mt-8.py-4(justify-center, align-center)
+              v-btn.mr-3(large, rounded, color="tblue", :disabled="buttonsDisabled", @click="buy")
+                v-icon.white--text fas fa-shopping-cart
+                .ml-2.text-capitalize.white--text.font-weight-bold Comprar
+              v-btn.ml-3(large, rounded, color="tyellow", :disabled="buttonsDisabled", @click="fav")
+                v-icon {{ favorite ? 'fas' : 'far' }} fa-star
+                .ml-2.text-capitalize.font-weight-bold Favorito
+            v-card.mt-4(color="grey lighten-3", flat, style="border-radius: 40px")
+              v-layout(style="cursor: pointer", justify-center)
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -3, 'disabled': buttonsDisabled}", @mouseup="vote(2)", @mousedown="select = -3", @mousemove="select = -3", @touchmove="select = -3") 😭
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -2, 'between': select < -2, 'disabled': buttonsDisabled}", @mouseup="vote(3)", @mousedown="select = -2", @mousemove="select = -2", @touchmove="select = -2") ️️😢
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -1, 'between': select < -1, 'disabled': buttonsDisabled}", @mouseup="vote(4)", @mousedown="select = -1", @mousemove="select = -1", @touchmove="select = -1") ☹️
+                .py-1.px-2(style="font-size: 1.8em", :class="{'center-selected': select != 0, 'center-notselected': select == 0, 'disabled': buttonsDisabled}", @mouseup="vote(5)", @mousedown="select = 0", @mousemove="select = 0", @touchemove="select = 0") 😐
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 1, 'between': select > 1, 'disabled': buttonsDisabled}", @mouseup="vote(6)", @mousedown="select = 1", @mousemove="select = 1", @touchemove="select = 1") 😊
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 2, 'between': select > 2, 'disabled': buttonsDisabled}", @mouseup="vote(7)", @mousedown="select = 2", @mousemove="select = 2", @touchemove="select = 2") 😁
+                .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 3, 'disabled': buttonsDisabled}", @mouseup="vote(8)", @mousedown="select = 3", @mousemove="select = 3") 😍
       v-else
-        //- v-layout
-          v-flex(xs6)
-            .font-weight-bold(style="font-size: 4em;") Descubre tu Propio Estilo
-    #mobile
+        v-layout.ma-12
+          v-flex(xs7).text-left
+            .font-weight-bold(style="font-size: 2em;") Descubre tu Propio Estilo
+            strong(style="display: inline-block") 1. Vota las prendas dependiendo de si te gustan más o menos
+            strong(style="display: inline-block") 2. Aprenderemos de ti y te ofreceremos cada vez mejores prendas
+            strong(style="display: inline-block") 3. Puedes comprar o guardar aquellas que más te gusten!
+          v-flex(xs5)
+            login(:flap="false")
+            signup.mt-2(:flap="false")
+    #mobile(v-else)
       GameCardsStack(:cards="cards",
                       @cardAccepted="handleCardAccepted",
                       @cardRejected="handleCardRejected",
                       @cardSkipped="handleCardSkipped",
                       @hideCard="removeCardFromDeck")
-      v-layout.mt-12.pt-6(justify-center, align-center)
-        v-btn.mx-3(large, fab, icon, :disabled="buttonsDisabled", @click="buy")
-          v-icon(color="tblue") fas fa-shopping-cart
-        v-slider.input(v-model="slider", min="10", max="90", :thumb-size="42", :loader-height="32", color="#f50057", @end="vote")
+      v-layout.mt-8.py-4(justify-center, align-center)
+        v-btn.mr-3(large, rounded, color="tblue", :disabled="buttonsDisabled", @click="buy")
+          v-icon.white--text fas fa-shopping-cart
+          .ml-2.text-capitalize.white--text.font-weight-bold Comprar
+        v-btn.ml-3(large, rounded, color="tyellow", :disabled="buttonsDisabled", @click="fav")
+          v-icon {{ favorite ? 'fas' : 'far' }} fa-star
+          .ml-2.text-capitalize.font-weight-bold Favorito
+      v-layout(justify-center)
+        v-card(color="grey lighten-3", flat, style="border-radius: 40px")
+          v-layout(style="cursor: pointer")
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -3, 'disabled': buttonsDisabled}", @mouseup="vote(2)", @mousedown="select = -3", @mousemove="select = -3", @touchmove="select = -3") 😭
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -2, 'between': select < -2, 'disabled': buttonsDisabled}", @mouseup="vote(3)", @mousedown="select = -2", @mousemove="select = -2", @touchmove="select = -2") ️️😢
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -1, 'between': select < -1, 'disabled': buttonsDisabled}", @mouseup="vote(4)", @mousedown="select = -1", @mousemove="select = -1", @touchmove="select = -1") ☹️
+            .py-1.px-2(style="font-size: 1.8em", :class="{'center-selected': select != 0, 'center-notselected': select == 0, 'disabled': buttonsDisabled}", @mouseup="vote(5)", @mousedown="select = 0", @mousemove="select = 0", @touchemove="select = 0") 😐
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 1, 'between': select > 1, 'disabled': buttonsDisabled}", @mouseup="vote(6)", @mousedown="select = 1", @mousemove="select = 1", @touchemove="select = 1") 😊
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 2, 'between': select > 2, 'disabled': buttonsDisabled}", @mouseup="vote(7)", @mousedown="select = 2", @mousemove="select = 2", @touchemove="select = 2") 😁
+            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 3, 'disabled': buttonsDisabled}", @mouseup="vote(8)", @mousedown="select = 3", @mousemove="select = 3") 😍
+        // v-slider.input(v-model="slider", min="10", max="90", :thumb-size="42", :loader-height="32", color="#f50057", @end="vote")
           template(style="font-size: 32px;", v-slot:thumb-label="{ value }")
             div(:style="`font-size: ${Math.abs(slider - 50) + 10}px`") {{ satisfactionEmojis[Math.min(Math.floor(value / 10), 9)] }}
-        v-btn.mx-3(large, fab, icon, :color="favorite ? 'tyellow' : ''", :disabled="buttonsDisabled", @click="fav")
-          v-icon(:color="!favorite ? 'tyellow' : 'white'") {{favorite ? 'fas' : 'far'}} fa-star
+    v-snackbar(:timeout="1000", :value="favorite", absolute, bottom, color="tyellow", dark, text) Guardada en Favoritos
 </template>
 
 <script lang="ts">
@@ -54,12 +77,15 @@ import GameCardsStack from '@/components/GameCardsStack.vue';
 export default Vue.extend({
   components: {
     GameCardsStack,
+    login: () => import('@/components/cards/login.vue'),
+    signup: () => import('@/components/cards/signup.vue'),
   },
 
   data: () => ({
     favorite: false,
     satisfactionEmojis: ['😭', '😢', '☹️', '🙁', '😐', '🙂', '😊', '😁', '😄', '😍'],
     slider: 50,
+    select: 0
   }),
 
   computed: {
@@ -78,6 +104,10 @@ export default Vue.extend({
       }
       return false;
     },
+
+    logged() {
+      return this.$store.state.auth.logged
+    }
   },
 
   methods: {
@@ -89,10 +119,11 @@ export default Vue.extend({
       this.handleCardRejected();
       this.removeCardFromDeck();
     },
-    vote() {
-      this.$store.dispatch('stack/vote', { code: this.cards[0].code, rating: this.slider / 10 });
+    vote(rating) {
+      if (this.buttonsDisabled) return;
+      this.$store.dispatch('stack/vote', { code: this.cards[0].code, rating: rating });
       this.removeCardFromDeck();
-      this.slider = 50;
+      this.slider = 0;
       console.log('Vote');
     },
     handleCardAccepted() {
@@ -119,6 +150,7 @@ export default Vue.extend({
       window.open(`https://www.amazon.es${this.cards[0].url}&linkCode=ll1&tag=mouo-21&linkId=c7cee5388cfffae3e66db9880a2dab3f&language=es_ES`);
     },
     fav() {
+      this.$store.dispatch('stack/vote', { code: this.cards[0].code, rating: 10 });
       this.$store.dispatch('stack/fav', this.cards[0].code);
       this.favorite = true;
     },
@@ -130,5 +162,37 @@ export default Vue.extend({
 <style lang="scss">
   .input {
     width: 100%;
+  }
+
+  .selected-right {
+    background-color: #f50057;
+    border-radius: 0 40px 40px 0; 
+  }
+
+  .selected-left {
+    background-color: #f50057;
+    border-radius: 40px 0 0 40px; 
+  }
+
+  .center-selected {
+    background-color: #f50057;
+  }
+
+  .center-notselected {
+    background-color: #f50057;
+    border-radius: 50%;
+  }
+
+  .notselected {
+    background-color: transparent;
+  }
+
+  .between {
+    background-color: #f50057;
+  }
+
+  .disabled {
+    color: #00000045;
+    background-color: transparent !important;
   }
 </style>

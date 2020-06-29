@@ -5,6 +5,7 @@ export default {
   state: {
     user: {},
     logged: false,
+    email: '',
   },
 
   mutations: {
@@ -15,6 +16,10 @@ export default {
 
     setLogged(state, data) {
       state.logged = data;
+    },
+
+    setEmail(state, data) {
+      state.email = data;
     },
 
     clear(state) {
@@ -47,9 +52,9 @@ export default {
 
           if (!(await dispatch('stack/fetch', {}, { root: true }))) {
             commit('stack/updateCards', [
-              // {
-              //   type: 'welcome',
-              // },
+              {
+                type: 'welcome',
+              },
               {
                 type: 'login',
               },

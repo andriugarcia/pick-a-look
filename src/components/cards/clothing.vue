@@ -6,16 +6,19 @@
     div(ref="infosection", style="position: absolute; bottom: 0; width: 100%;")
       v-fade-transition
         v-btn.mb-1.px-4.text-capitalize.font-weight-bold(v-show="!expanded", rounded, depressed, x-small, style="border: 2px solid black") Ver Más Info
-      v-card.pt-4.text-left.section(flat, tile, :ripple="false", style="border: 2px solid #1c1c1c; border-radius: 12px;", :class="{'collapsed': !expanded, 'expanded': expanded}")
+      div(style="width: 100%")
+        .triangle
+      v-card.pt-n4.text-left.section(flat, tile, :ripple="false", style="background-color: #f50057", @click="expanded = !expanded", :class="{'collapsed': !expanded, 'expanded': expanded}")
         v-layout.pl-4(justify-space-between)
           .mr-2
             h3 {{card.brand}}
             p {{card.name | truncate}}
           .mb-5.mt-4.py-3.px-4(v-if="card.price != '0€'", style="background-color: black; border-radius: 50px 0 0 50px;", align-center)
             h3.white--text {{card.price}}
-        .px-4
+        .px-4.mt-4
           .font-weight-bold Descripción
           div {{ card.description }}
+      
 </template>
 
 <script lang="ts">
@@ -70,5 +73,12 @@ export default Vue.extend({
 
   .expanded {
     max-height:460px;
+  }
+
+  .triangle {
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #f50057;
+    border-right: 90vw solid transparent;
   }
 </style>

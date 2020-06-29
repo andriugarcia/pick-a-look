@@ -6,9 +6,9 @@
           v-icon {{ getIcon() }}
           h3.ml-4 {{ getHeader() }}
     masonry(:cols="{default: 4, 1000: 3, 700: 2, 400: 1}")
-      v-card.ma-2.mb-4(v-for="(clothing, i) in clothes", :key="i", hover, flat, style="border: 2px solid #1c1c1c;")
+      v-card.ma-2.mb-4(v-for="(clothing, i) in clothes", :key="i", hover, @click="buy(clothing)", flat, style="border: 2px solid #1c1c1c;")
         v-img(:src="clothing.pictures[0]")
-        v-card.px-3.smallcard(style="height: 100%", flat)
+        v-card.px-3.smallcard(style="height: 100%", flat, color="#f50057", tile)
           strong(style="font-size: .8em") {{clothing.name | truncate(60)}}
           div(style="font-size: .8em") {{clothing.brand | truncate(60)}}
 </template>
@@ -50,13 +50,19 @@ export default Vue.extend({
           return 'Prendas que te han gustado';
         case 'Dislikes':
           return 'Prendas que no te han gustado';
-        case 'Favorite':
+        case 'Favorites':
           return 'Prendas Favoritas';
         case 'Bought':
           return 'Prendas que has comprado';
         default:
           return '';
       }
+    },
+
+    buy(card) {
+      console.log(card)
+      this.$store.dispatch('stack/bought', card.code);
+      window.open(`https://www.amazon.es${card.url}&linkCode=ll1&tag=mouo-21&linkId=c7cee5388cfffae3e66db9880a2dab3f&language=es_ES`);
     },
 
     getIcon() : string {
@@ -81,7 +87,7 @@ export default Vue.extend({
           return this.$store.dispatch('list/likes');
         case 'Dislikes':
           return this.$store.dispatch('list/dislikes');
-        case 'Favorite':
+        case 'Favorites':
           return this.$store.dispatch('list/favorites');
         case 'Bought':
           return this.$store.dispatch('list/bought');

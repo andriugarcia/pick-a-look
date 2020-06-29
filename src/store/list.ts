@@ -14,7 +14,8 @@ export default {
           price: card.price,
           brand: card.brand,
           pictures: [card.image],
-          url: '',
+          url: card.url,
+          code: card.code,
         }));
 
         return clothes;
@@ -34,6 +35,7 @@ export default {
           brand: card.brand,
           pictures: [card.image],
           url: '',
+          code: card.code,
         }));
 
         return clothes;
@@ -53,6 +55,7 @@ export default {
           brand: card.brand,
           pictures: [card.image],
           url: '',
+          code: card.code,
         }));
 
         return clothes;
@@ -72,6 +75,7 @@ export default {
           brand: card.brand,
           pictures: [card.image],
           url: '',
+          code: card.code,
         }));
 
         return clothes;

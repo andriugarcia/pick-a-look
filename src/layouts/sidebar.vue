@@ -1,7 +1,16 @@
 <template lang="pug">
   v-list.text-left(style="position: relative; height: 100%")
-    v-card.ml-6.mt-4(flat, @click="$router.push({path: '/'})")
-      img(src="../assets/LogoText.svg", style="width: 220px")
+    v-layout(justify-space-between, align-center)
+      v-card.ml-6.mt-4(flat, @click="$router.push({path: '/'})")
+        img(src="../assets/LogoText.svg", style="width: 220px")
+      v-menu(offset-y, v-if="logged && $vuetify.breakpoint.mdAndUp")
+        template(v-slot:activator="{on}")
+          div(style="border: 3px solid #1c1c1c; border-radius: 50%", v-on="on")
+            v-avatar(color="#f50057", :size="36", v-ripple)
+              .font-weight-bold A
+        v-list
+          v-list-item(@click="logout")
+            div Cerrar Sesión
     .overline.mt-8.pl-6 TUS ACCIONES
     v-divider.my-4
     v-list-item(@click="toList('Likes')")
@@ -24,7 +33,10 @@
         v-icon.white--text(small) fas fa-shopping-cart
       v-list-item-content
         v-list-item-title Prendas que has comprado
-    .skew(style="width: 100%", :class="{'bottomMobile': !$vuetify.breakpoint.mdAndUp, 'bottomDesktop': $vuetify.breakpoint.mdAndUp}")
+    v-autcomplete.mt-6.mx-6(solo, placeholder="Añadir Filtro")
+    v-layout.mx-6(wrap)
+      v-chip(color="grey-lighten-3") Mujer
+    .skew.bottom(style="width: 100%")
       v-layout.wrapper.pb-2(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")
         i.white--text.font-weight-bold Done with
         v-icon.mx-2.white--text fas fa-fire-alt
@@ -37,11 +49,19 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  computed: {
+    logged() {
+      return this.$store.state.auth.logged;
+    },
+  },
   methods: {
     toList(r) : void {
       this.$router.push({
         name: r,
       });
+    },
+    logout() : void {
+      this.$store.dispatch('auth/logout');
     },
     toTwitter() : void {
       window.open('https://twitter.com/VersyCreate');
@@ -77,12 +97,8 @@ export default Vue.extend({
     -o-transform: skewY(5deg);
     transform: skewY(5deg);
   }
-  .bottomMobile {
+  .bottom {
     position: absolute;
-    bottom: 0;
-  }
-  .bottomDesktop {
-    position: fixed;
     bottom: 0;
   }
 </style>

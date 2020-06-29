@@ -84,146 +84,12 @@ export default {
     },
   },
 
-  mounted() {
-    const element = this.$refs.interactElement;
-    interact(element).on('tap', () => {
-      this.expanded = !this.expanded;
-    });
-
-    interact(element).draggable({
-      onstart: () => {
-        this.isInteractAnimating = false;
-      },
-
-      onmove: (event) => {
-        const {
-          interactMaxRotation,
-          interactXThreshold,
-        } = this.$options.static;
-        const x = this.interactPosition.x + event.dx;
-        const y = this.interactPosition.y + event.dy;
-
-        let rotation = interactMaxRotation * (x / interactXThreshold);
-
-        if (rotation > interactMaxRotation) rotation = interactMaxRotation;
-        else if (rotation < -interactMaxRotation) rotation = -interactMaxRotation;
-
-        // Set Colors
-        if (x > interactXThreshold) {
-          this.vibrate();
-          this.accepted = this.card.type !== 'login' && this.card.type !== 'signup';
-        } else if (x < -interactXThreshold) {
-          this.vibrate();
-          this.rejected = this.card.type !== 'login' && this.card.type !== 'signup';
-        } else {
-          this.accepted = false;
-          this.rejected = false;
-        }
-
-        this.interactSetPosition({ x, y, rotation });
-      },
-
-      onend: () => {
-        const { x } = this.interactPosition;
-        const { interactXThreshold } = this.$options.static;
-        this.isInteractAnimating = true;
-
-        if (this.card.type === 'login' || this.card.type === 'signup') {
-          this.resetCardPosition();
-          return;
-        }
-
-        if (x > interactXThreshold) this.playCard(ACCEPT_CARD);
-        else if (x < -interactXThreshold) this.playCard(REJECT_CARD);
-        else this.resetCardPosition();
-      },
-    });
-
-    interact(element).ignoreFrom('section');
-
-    this.$root.$on('acceptCard', () => {
-      if (this.isCurrent) {
-        this.vibrate();
-        this.accepted = true;
-        setTimeout(() => {
-          this.isShowing = false;
-          this.$emit('hideCard', this.card);
-        }, 200);
-      }
-    });
-
-    this.$root.$on('rejectCard', () => {
-      if (this.isCurrent) {
-        this.vibrate();
-        this.rejected = true;
-        setTimeout(() => {
-          this.isShowing = false;
-          this.$emit('hideCard', this.card);
-        }, 200);
-      }
-    });
-  },
-
-  beforeDestroy() {
-    interact(this.$refs.interactElement).unset();
-  },
-
   methods: {
-    vibrate() {
-      if (this.accepted || this.rejected) return;
-      if (navigator.vibrate) {
-        navigator.vibrate(150);
-      }
-    },
     hideCard() {
       setTimeout(() => {
         this.isShowing = false;
         this.$emit('hideCard', this.card);
       }, 300);
-    },
-
-    playCard(interaction) {
-      const {
-        interactOutOfSightXCoordinate,
-        interactMaxRotation,
-      } = this.$options.static;
-
-      this.interactUnsetElement();
-
-      switch (interaction) {
-        case ACCEPT_CARD:
-          this.interactSetPosition({
-            x: interactOutOfSightXCoordinate,
-            rotation: interactMaxRotation,
-          });
-          this.$emit(ACCEPT_CARD);
-          break;
-        case REJECT_CARD:
-          this.interactSetPosition({
-            x: -interactOutOfSightXCoordinate,
-            rotation: -interactMaxRotation,
-          });
-          this.$emit(REJECT_CARD);
-          break;
-        default:
-          break;
-      }
-
-      this.hideCard();
-    },
-
-    interactSetPosition(coordinates) {
-      const { x = 0, y = 0, rotation = 0 } = coordinates;
-      this.interactPosition = { x, y, rotation };
-    },
-
-    interactUnsetElement() {
-      interact(this.$refs.interactElement).unset();
-      this.isInteractDragged = true;
-    },
-
-    resetCardPosition() {
-      this.interactSetPosition({ x: 0, y: 0, rotation: 0 });
     },
   },
 };
@@ -245,15 +111,6 @@ $fs-card-title: 1.125em;
   @include absolute(0);
   @include sizing(100% 80vw);
   @include flex-center();
-
-  @include after() {
-    @include sizing(21px 3px);
-    @include absolute(right 0 bottom 11px left 0);
-
-    margin: auto;
-    border-radius: 100px;
-    background: rgba($c-black, 0.3);
-  }
 
   display: flex;
   // max-height: 350px;
