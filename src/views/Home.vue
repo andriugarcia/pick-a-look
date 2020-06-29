@@ -165,21 +165,21 @@ export default Vue.extend({
   }
 
   .selected-right {
-    background-color: #f50057;
-    border-radius: 0 40px 40px 0; 
+    background-color: #D0D0D0;
+    border-radius: 6px 40px 40px 6px; 
   }
 
   .selected-left {
-    background-color: #f50057;
-    border-radius: 40px 0 0 40px; 
+    background-color: #D0D0D0;
+    border-radius: 40px 6px 6px 40px; 
   }
 
   .center-selected {
-    background-color: #f50057;
+    background-color: #D0D0D0;
   }
 
   .center-notselected {
-    background-color: #f50057;
+    background-color: #D0D0D0;
     border-radius: 50%;
   }
 
@@ -188,7 +188,7 @@ export default Vue.extend({
   }
 
   .between {
-    background-color: #f50057;
+    background-color: #D0D0D0;
   }
 
   .disabled {

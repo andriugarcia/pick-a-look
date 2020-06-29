@@ -8,7 +8,7 @@
         v-btn.mb-1.px-4.text-capitalize.font-weight-bold(v-show="!expanded", rounded, depressed, x-small, style="border: 2px solid black") Ver Más Info
       div(style="width: 100%")
         .triangle
-      v-card.pt-n4.text-left.section(flat, tile, :ripple="false", style="background-color: #f50057", @click="expanded = !expanded", :class="{'collapsed': !expanded, 'expanded': expanded}")
+      v-card.pt-n4.text-left.section(flat, tile, :ripple="false", style="background-color: #f50057", @click="expand", :class="{'collapsed': !expanded, 'expanded': expanded}")
         v-layout.pl-4(justify-space-between)
           .mr-2
             h3 {{card.brand}}
@@ -26,12 +26,27 @@ import Vue from 'vue';
 import Carousel from '@/components/carousel.vue';
 
 export default Vue.extend({
+  data: () => ({
+    expanded: false,
+  }),
   filters: {
     truncate(value) {
       const str = value.toString();
       if (str.length >= 60) return `${str.substr(0, 60)}...`;
       return str;
     },
+  },
+
+  methods: {
+    expand() {
+      console.log("Expand");
+      if (typeof this.card.description !== 'undefined') {
+        this.expanded = !this.expanded
+      }
+      else {
+        this.expanded = false
+      }
+    }
   },
 
   components: {
@@ -51,10 +66,6 @@ export default Vue.extend({
     card: {
       type: Object,
       default: () => {},
-    },
-    expanded: {
-      type: Boolean,
-      default: false,
     },
   },
 });

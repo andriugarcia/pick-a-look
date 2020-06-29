@@ -33,8 +33,8 @@
         v-icon.white--text(small) fas fa-shopping-cart
       v-list-item-content
         v-list-item-title Prendas que has comprado
-    v-autcomplete.mt-6.mx-6(solo, placeholder="Añadir Filtro")
-    v-layout.mx-6(wrap)
+    //- v-autocomplete.mt-6.mx-6(solo, placeholder="Añadir Filtro")
+    //- v-layout.mx-6(wrap)
       v-chip(color="grey-lighten-3") Mujer
     .skew.bottom(style="width: 100%")
       v-layout.wrapper.pb-2(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")

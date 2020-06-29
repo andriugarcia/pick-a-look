@@ -32,11 +32,11 @@ export default {
         const cards = data.map((card) => ({
           name: card.name,
           code: card.code,
-          description: '',
+          description: card.description,
           price: card.price,
           brand: card.brand,
-          pictures: [card.image, card.image, card.image],
-          srcsets: [card.srcset, card.srcset, card.srcset],
+          pictures: [card.image],
+          srcsets: [card.srcset],
           type: 'clothing',
           url: card.url,
         }));

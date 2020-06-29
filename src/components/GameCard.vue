@@ -8,7 +8,7 @@
       v-overlay(absolute, :value="accepted", :opacity=".8", color="tgreen")
         v-icon(x-large) far fa-thumbs-up
       v-sheet(color="tyellow", style="height: 100%; width: 100%")
-        component(:is="cardRenderer", :card="card", @discard="hideCard", :expanded="expanded")
+        component(:is="cardRenderer", :card="card", @discard="hideCard")
 </template>
 
 <script>
@@ -42,7 +42,6 @@ export default {
       isShowing: true,
       isInteractAnimating: true,
       isInteractDragged: null,
-      expanded: false,
       interactPosition: {
         x: 0,
         y: 0,
