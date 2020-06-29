@@ -7,7 +7,7 @@ export default {
     async likes() : Promise<Array<Object>> {
       console.log('LIKES');
       try {
-        const { data } = await Axios.get('http://pickalook-server.herokuapp.com/likes');
+        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/likes');
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',
@@ -26,7 +26,7 @@ export default {
 
     async dislikes() : Promise<Array<Object>> {
       try {
-        const { data } = await Axios.get('http://pickalook-server.herokuapp.com/dislikes');
+        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/dislikes');
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',
@@ -45,7 +45,7 @@ export default {
 
     async bought() : Promise<Array<Object>> {
       try {
-        const { data } = await Axios.get('http://pickalook-server.herokuapp.com/bought');
+        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/bought');
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',
@@ -64,7 +64,7 @@ export default {
 
     async favorites() : Promise<Array<Object>> {
       try {
-        const { data } = await Axios.get('http://pickalook-server.herokuapp.com/favorites');
+        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/favorites');
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',

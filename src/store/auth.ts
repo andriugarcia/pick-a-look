@@ -84,7 +84,7 @@ export default {
       console.log('SIGNIN');
 
       try {
-        const { data } = await Axios.post('http://pickalook-server.herokuapp.com/signin', {
+        const { data } = await Axios.post('https://pickalook-server.herokuapp.com/signin', {
           email,
           password,
         });
@@ -103,7 +103,7 @@ export default {
       console.log('SIGNUP');
 
       try {
-        const { data } = await Axios.post('http://pickalook-server.herokuapp.com/signup', {
+        const { data } = await Axios.post('https://pickalook-server.herokuapp.com/signup', {
           email,
           password,
         });
