@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import stack from './stack.ts';
-import auth from './auth.ts';
-import list from './list.ts';
+import stack from './stack';
+import auth from './auth';
+import list from './list';
 
 Vue.use(Vuex);
 

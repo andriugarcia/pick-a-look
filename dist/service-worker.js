@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.3683e7824e419d2b006985518d19b797.js"
+  "/precache-manifest.7a7490f98dbe980933c4ce16d3614936.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "clothes-tinder"});

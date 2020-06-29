@@ -47,16 +47,10 @@ export default Vue.extend({
   },
 
   async mounted() {
-    this.setVibration();
     await this.$store.dispatch('auth/checkLogged');
   },
 
   methods: {
-
-    setVibration() : void {
-      navigator.vibrate = navigator.vibrate || navigator.webkitVibrate
-      || navigator.mozVibrate || navigator.msVibrate;
-    },
 
     logout() : void {
       this.$store.dispatch('auth/logout');

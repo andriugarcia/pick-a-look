@@ -66,7 +66,7 @@ export default Vue.extend({
         case 'Dislikes':
           return Icon.Dislike;
         case 'Favorites':
-          return Icon.Favorites;
+          return Icon.Favorite;
         case 'Bought':
           return Icon.Buy;
         default:
@@ -89,12 +89,6 @@ export default Vue.extend({
           return [];
       }
     },
-  },
-
-  async beforeRouteUpdate(to, next) {
-    console.log('updating', to);
-    // this.clothes = await this.getClothes();
-    next();
   },
 });
 </script>
