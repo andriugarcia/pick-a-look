@@ -32,6 +32,10 @@ import Sidebar from '@/layouts/sidebar.vue';
 export default Vue.extend({
   name: 'App',
 
+  components: {
+    Sidebar,
+  },
+
   data: () => ({
     drawer: false,
   }),
@@ -40,10 +44,6 @@ export default Vue.extend({
     logged() {
       return this.$store.state.auth.logged;
     },
-  },
-
-  components: {
-    Sidebar,
   },
 
   async mounted() {

@@ -24,6 +24,11 @@ enum Icon {
 }
 
 export default Vue.extend({
+  filters: {
+    truncate(text, stop, clamp) {
+      return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '');
+    },
+  },
   data: () => ({
     clothes: [],
     selected: 2,
@@ -37,11 +42,6 @@ export default Vue.extend({
 
   async mounted() {
     this.clothes = await this.getClothes(this.$route.name);
-  },
-  filters: {
-    truncate(text, stop, clamp) {
-      return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '');
-    },
   },
   methods: {
     getHeader() : string {
