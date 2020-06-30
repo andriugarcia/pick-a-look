@@ -16,6 +16,7 @@ export default {
           pictures: [card.image],
           url: card.url,
           code: card.code,
+          srcsets: [card.srcset],
         }));
 
         return clothes;
@@ -36,6 +37,7 @@ export default {
           pictures: [card.image],
           url: '',
           code: card.code,
+          srcsets: [card.srcset],
         }));
 
         return clothes;
@@ -56,6 +58,7 @@ export default {
           pictures: [card.image],
           url: '',
           code: card.code,
+          srcsets: [card.srcset],
         }));
 
         return clothes;
@@ -76,6 +79,7 @@ export default {
           pictures: [card.image],
           url: '',
           code: card.code,
+          srcsets: [card.srcset],
         }));
 
         return clothes;

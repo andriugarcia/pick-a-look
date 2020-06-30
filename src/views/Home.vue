@@ -3,9 +3,7 @@
     #desktop(v-if="$vuetify.breakpoint.mdAndUp")
       v-layout(v-if="logged")
         masonry(:cols="{default: 2, 400: 1}", style="height: 100vh; width: 60%")
-          v-img.ma-4(:src="cards[0].pictures[0]")
-          v-img.ma-4(:src="cards[0].pictures[1]")
-          v-img.ma-4(:src="cards[0].pictures[2]")
+          img.ma-4(v-for="(picture, i) in cards[0].pictures", style="width: 100%", :src="picture", :srcset="cards[0].srcsets[i]")
         v-flex.text-left.pa-6(md5, style="position: relative")
           v-layout(align-center)
             h1 {{ cards[0].brand }}
@@ -13,7 +11,7 @@
             .py-3.px-4(v-if="cards[0].price != '0€'", style="background-color: black; border-radius: 25px 0 0 25px;", align-center)
               h3.white--text {{cards[0].price}}
           h3.mt-4 {{ cards[0].name }}
-          .mt-4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          .mt-4 {{ cards[0].description }}
           div(style="position: absolute; bottom: 64px")  
             v-layout.mt-8.py-4(justify-center, align-center)
               v-btn.mr-3(large, rounded, color="tblue", :disabled="buttonsDisabled", @click="buy")
@@ -31,7 +29,7 @@
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 1, 'between': select > 1, 'disabled': buttonsDisabled}", @mouseup="vote(6)", @mousedown="select = 1", @mousemove="select = 1", @touchemove="select = 1") 😊
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 2, 'between': select > 2, 'disabled': buttonsDisabled}", @mouseup="vote(7)", @mousedown="select = 2", @mousemove="select = 2", @touchemove="select = 2") 😁
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 3, 'disabled': buttonsDisabled}", @mouseup="vote(8)", @mousedown="select = 3", @mousemove="select = 3") 😍
-      v-else
+      div(v-else)
         v-layout.ma-12
           v-flex(xs7).text-left
             .font-weight-bold(style="font-size: 2em;") Descubre tu Propio Estilo
@@ -106,8 +104,8 @@ export default Vue.extend({
     },
 
     logged() {
-      return this.$store.state.auth.logged
-    }
+      return this.$store.state.auth.logged;
+    },
   },
 
   methods: {

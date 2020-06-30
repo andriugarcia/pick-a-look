@@ -1,7 +1,7 @@
 <template lang="pug">
-  #login
+  #login(style="position: relative")
     v-sheet.pb-12#login(style="height: 100%", color="tblue")
-      h1.pt-4.white--text Inicia Sesión
+      h2.pt-4.white--text Inicia Sesión
       v-text-field.mt-4.mx-6(solo, placeholder="Email", v-model="email")
       v-text-field.mx-6(solo, placeholder="Contraseña", v-model="password", type="password", @keydown.enter="signin")
       section.mx-6
@@ -24,9 +24,9 @@
           v-btn(icon, large)
             v-icon(large).white--text fab fa-facebook
           .white--text Facebook
-    v-sheet(v-if="flap", style="position: absolute; bottom: 0; left: 0; right: 0", color="tyellow")
-      h1.my-3 O Regístrate
-      section.mx-6.mb-6
+    v-sheet.pb-4(v-if="flap", style="position: absolute; bottom: -60px; left: 0; right: 0", color="tyellow")
+      h2.mt-2 O Regístrate
+      section.mx-6.mt-2
         v-btn(color="black", block, dark, :loading="loading", @click="toSignup") Registrate
 
 </template>

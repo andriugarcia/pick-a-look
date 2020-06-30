@@ -7,7 +7,7 @@
           h3.ml-4 {{ getHeader() }}
     masonry(:cols="{default: 4, 1000: 3, 700: 2, 400: 1}")
       v-card.ma-2.mb-4(v-for="(clothing, i) in clothes", :key="i", hover, @click="buy(clothing)", flat, style="border: 2px solid #1c1c1c;")
-        v-img(:src="clothing.pictures[0]")
+        img(v-for="(picture, i) in clothing.pictures", style="width: 100%", :src="picture", :srcset="clothing.srcsets[i]")
         v-card.px-3.smallcard(style="height: 100%", flat, color="#f50057", tile)
           strong(style="font-size: .8em") {{clothing.name | truncate(60)}}
           div(style="font-size: .8em") {{clothing.brand | truncate(60)}}

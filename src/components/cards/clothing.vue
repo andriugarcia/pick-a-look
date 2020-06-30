@@ -5,7 +5,7 @@
       //- v-img(:src="card.pictures[0]", style="height: 100%; border-radius: 6px")
     div(ref="infosection", style="position: absolute; bottom: 0; width: 100%;")
       v-fade-transition
-        v-btn.mb-1.px-4.text-capitalize.font-weight-bold(v-show="!expanded", rounded, depressed, x-small, style="border: 2px solid black") Ver Más Info
+        v-btn.mb-1.px-4.text-capitalize.font-weight-bold(v-show="card.description && !expanded", rounded, depressed, x-small, style="border: 2px solid black") Ver Más Info
       div(style="width: 100%")
         .triangle
       v-card.pt-n4.text-left.section(flat, tile, :ripple="false", style="background-color: #f50057", @click="expand", :class="{'collapsed': !expanded, 'expanded': expanded}")
