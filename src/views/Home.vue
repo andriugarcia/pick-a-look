@@ -25,7 +25,7 @@
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -3, 'disabled': buttonsDisabled}", @mouseup="vote(2)", @mousedown="select = -3", @mousemove="select = -3", @touchmove="select = -3") 😭
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -2, 'between': select < -2, 'disabled': buttonsDisabled}", @mouseup="vote(3)", @mousedown="select = -2", @mousemove="select = -2", @touchmove="select = -2") ️️😢
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -1, 'between': select < -1, 'disabled': buttonsDisabled}", @mouseup="vote(4)", @mousedown="select = -1", @mousemove="select = -1", @touchmove="select = -1") ☹️
-                .py-1.px-2(style="font-size: 1.8em", :class="{'center-selected': select != 0, 'center-notselected': select == 0, 'disabled': buttonsDisabled}", @mouseup="vote(5)", @mousedown="select = 0", @mousemove="select = 0", @touchemove="select = 0") 😐
+                .py-1.px-2(style="font-size: 1.8em", :class="{'selected-right': select < 0, 'selected-left': select > 0, 'center-notselected': select == 0, 'disabled': buttonsDisabled}", @mouseup="vote(5)", @mousedown="select = 0", @mousemove="select = 0", @touchemove="select = 0") 😐
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 1, 'between': select > 1, 'disabled': buttonsDisabled}", @mouseup="vote(6)", @mousedown="select = 1", @mousemove="select = 1", @touchemove="select = 1") 😊
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 2, 'between': select > 2, 'disabled': buttonsDisabled}", @mouseup="vote(7)", @mousedown="select = 2", @mousemove="select = 2", @touchemove="select = 2") 😁
                 .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 3, 'disabled': buttonsDisabled}", @mouseup="vote(8)", @mousedown="select = 3", @mousemove="select = 3") 😍
@@ -53,15 +53,15 @@
           v-icon {{ favorite ? 'fas' : 'far' }} fa-star
           .ml-2.text-capitalize.font-weight-bold Favorito
       v-layout(justify-center)
-        v-card(color="grey lighten-3", flat, style="border-radius: 40px")
-          v-layout(style="cursor: pointer")
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -3, 'disabled': buttonsDisabled}", @mouseup="vote(2)", @mousedown="select = -3", @mousemove="select = -3", @touchmove="select = -3") 😭
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -2, 'between': select < -2, 'disabled': buttonsDisabled}", @mouseup="vote(3)", @mousedown="select = -2", @mousemove="select = -2", @touchmove="select = -2") ️️😢
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -1, 'between': select < -1, 'disabled': buttonsDisabled}", @mouseup="vote(4)", @mousedown="select = -1", @mousemove="select = -1", @touchmove="select = -1") ☹️
-            .py-1.px-2(style="font-size: 1.8em", :class="{'center-selected': select != 0, 'center-notselected': select == 0, 'disabled': buttonsDisabled}", @mouseup="vote(5)", @mousedown="select = 0", @mousemove="select = 0", @touchemove="select = 0") 😐
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 1, 'between': select > 1, 'disabled': buttonsDisabled}", @mouseup="vote(6)", @mousedown="select = 1", @mousemove="select = 1", @touchemove="select = 1") 😊
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 2, 'between': select > 2, 'disabled': buttonsDisabled}", @mouseup="vote(7)", @mousedown="select = 2", @mousemove="select = 2", @touchemove="select = 2") 😁
-            .py-1.px-3(style="font-size: 1.8em", :class="{'selected-right': select == 3, 'disabled': buttonsDisabled}", @mouseup="vote(8)", @mousedown="select = 3", @mousemove="select = 3") 😍
+        v-card(flat, style="border-radius: 40px")
+          v-btn-toggle(rounded)
+            v-btn(@mouseup="vote(-3)", style="font-size: 1.4em") 😭
+            v-btn(@mouseup="vote(-2)", style="font-size: 1.4em") ️️😢
+            v-btn(@mouseup="vote(-1)", style="font-size: 1.4em") ☹️
+            v-btn(@mouseup="vote(0)", style="font-size: 1.4em") 😐
+            v-btn(@mouseup="vote(1)", style="font-size: 1.4em") 😊
+            v-btn(@mouseup="vote(2)", style="font-size: 1.4em") 😁
+            v-btn(@mouseup="vote(3)", style="font-size: 1.4em") 😍
         // v-slider.input(v-model="slider", min="10", max="90", :thumb-size="42", :loader-height="32", color="#f50057", @end="vote")
           template(style="font-size: 32px;", v-slot:thumb-label="{ value }")
             div(:style="`font-size: ${Math.abs(slider - 50) + 10}px`") {{ satisfactionEmojis[Math.min(Math.floor(value / 10), 9)] }}
@@ -170,10 +170,6 @@ export default Vue.extend({
   .selected-left {
     background-color: #D0D0D0;
     border-radius: 40px 6px 6px 40px; 
-  }
-
-  .center-selected {
-    background-color: #D0D0D0;
   }
 
   .center-notselected {

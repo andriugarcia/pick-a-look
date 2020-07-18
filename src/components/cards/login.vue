@@ -9,7 +9,7 @@
       .text-center.mt-4.white--text O inicia a través de
       v-layout.mx-6(justify-center)
         .mx-2
-          v-btn(icon, large)
+          v-btn(icon, large, v-google-signin-button="clientId")
             v-icon(large).white--text fab fa-google
           .white--text Google
         .mx-2
@@ -33,12 +33,17 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import GoogleSignInButton from 'vue-google-signin-button-directive'
 
 export default Vue.extend({
+  directives: {
+    GoogleSignInButton
+  },
   data: () => ({
     email: '',
     password: '',
     loading: false,
+    clientId: '774180793403-9h849s9h8it86b949hjb83e7gm722oop.apps.googleusercontent.com'
   }),
 
   props: {
@@ -68,6 +73,15 @@ export default Vue.extend({
       setTimeout(() => {
         this.$emit('discard');
       }, 50);
+    },
+    OnGoogleAuthSuccess (idToken) {
+      const result = this.$store.dispatch('auth/signinGoogle', idToken)
+      if (result) {
+        this.$emit('discard');
+      }
+    },
+    OnGoogleAuthFail (error) {
+      console.log(error)
     },
   },
 });

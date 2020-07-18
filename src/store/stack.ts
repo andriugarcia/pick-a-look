@@ -25,7 +25,7 @@ export default {
   actions: {
     async fetch({ commit }) : Promise<boolean> {
       try {
-        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/stack');
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/stack`);
 
         console.log('STACK', data);
 
@@ -51,7 +51,7 @@ export default {
 
     async fetchPopulars({ commit }) : Promise<boolean> {
       try {
-        const { data } = await Axios.get('https://pickalook-server.herokuapp.com/populars');
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/populars`);
 
         console.log('STACK', data);
 
@@ -77,7 +77,7 @@ export default {
 
     async getProduct(_, code) {
       try {
-        const { data } = await Axios.get(`https://pickalook-server.herokuapp.com/product/${code}`);
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/product/${code}`);
         return data;
       } catch (err) {
         console.error(err);
@@ -88,7 +88,7 @@ export default {
     async vote(_, { code, rating }) {
       console.log(code);
       try {
-        await Axios.post('https://pickalook-server.herokuapp.com/vote', {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/vote`, {
           clothing: code,
           rating,
         });
@@ -100,7 +100,7 @@ export default {
     async like(_, clothing) {
       console.log(clothing);
       try {
-        await Axios.post('https://pickalook-server.herokuapp.com/like', {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/like`, {
           clothing,
         });
       } catch (err) {
@@ -111,7 +111,7 @@ export default {
     async dislike(_, clothing) {
       console.log(clothing);
       try {
-        await Axios.post('https://pickalook-server.herokuapp.com/dislike', {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/dislike`, {
           clothing,
         });
       } catch (err) {
@@ -122,7 +122,7 @@ export default {
     async bought(_, clothing) {
       console.log(clothing);
       try {
-        await Axios.post('https://pickalook-server.herokuapp.com/buy', {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/buy`, {
           clothing,
         });
       } catch (err) {
@@ -133,7 +133,7 @@ export default {
     async fav(_, clothing) {
       console.log(clothing);
       try {
-        await Axios.post('https://pickalook-server.herokuapp.com/fav', {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/fav`, {
           clothing,
         });
       } catch (err) {

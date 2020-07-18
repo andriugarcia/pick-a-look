@@ -5,7 +5,6 @@ export default {
   state: {
     user: {},
     logged: false,
-    email: '',
   },
 
   mutations: {
@@ -18,8 +17,16 @@ export default {
       state.logged = data;
     },
 
-    setEmail(state, data) {
-      state.email = data;
+    setUser(state, data) {
+      state.user = data;
+    },
+
+    setFilters(state, data) {
+      state.user.filters = data;
+    },
+
+    setGenre(state, data) {
+      state.user.genre = data;
     },
 
     clear(state) {
@@ -40,6 +47,12 @@ export default {
   },
 
   actions: {
+    async getUser({ commit }) {
+      console.log("GETTING USER")
+      let {data} = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/getMe`)
+      console.log(data);
+      commit('setUser', data);
+    },
     async checkLogged({ commit, getters, dispatch }) {
       const token = getters.getToken;
       if (typeof token !== 'undefined') {
@@ -49,7 +62,7 @@ export default {
             Authorization: `Bearer ${token}`,
           };
           commit('setLogged', true);
-
+          dispatch('getUser');
           if (!(await dispatch('stack/fetch', {}, { root: true }))) {
             commit('stack/updateCards', [
               {
@@ -79,23 +92,38 @@ export default {
       commit('clear');
       commit('stack/clear', {}, { root: true });
       commit('setToken', '');
+      commit('setLogout', false);
       commit('stack/updateCards', [
         {
           type: 'login',
         },
       ], { root: true });
     },
+    async signinGoogle({ commit, dispatch }, token): Promise<boolean> {
+      try {
+        commit('setToken', token);
+        await dispatch('getUser');
+        const result = await dispatch('stack/fetch', {}, { root: true });
+        commit('setLogged', result);
+        return result;
+      }
+      catch(err) {
+        console.log(err);
+        return false;
+      }
+    },
     async signin({ commit, dispatch }, { email, password }) : Promise<boolean> {
       console.log('SIGNIN');
 
       try {
-        const { data } = await Axios.post('https://pickalook-server.herokuapp.com/signin', {
+        const { data } = await Axios.post(`${process.env.VUE_APP_ENDPOINT}/signin`, {
           email,
           password,
         });
 
         console.log(data);
         commit('setToken', data.token);
+        await dispatch('getUser');
         const result = await dispatch('stack/fetch', {}, { root: true });
         commit('setLogged', result);
         return result;
@@ -108,7 +136,7 @@ export default {
       console.log('SIGNUP');
 
       try {
-        const { data } = await Axios.post('https://pickalook-server.herokuapp.com/signup', {
+        const { data } = await Axios.post('${process.env.VUE_APP_ENDPOINT}/signup', {
           email,
           password,
         });
@@ -116,6 +144,7 @@ export default {
         console.log(data);
         commit('setToken', data.token);
         commit('setLogged', true);
+        await dispatch('getUser');
         dispatch('stack/fetchPopulars', {}, { root: true });
         return true;
       } catch (err) {

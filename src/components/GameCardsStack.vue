@@ -1,6 +1,10 @@
 <template lang="pug">
   div(style="height: 64vh")
+    .ma-4(v-if="loading")
+      v-skeleton-loader(transition="scale-transition", type="image")
+      v-skeleton-loader(transition="scale-transition", type="card")
     GameCard.cards(
+      v-else,
       v-for="(card, index) in cards",
       :key="card",
       :card="card",
@@ -17,6 +21,12 @@ import GameCard from './GameCard.vue';
 export default {
   components: {
     GameCard,
+  },
+
+  computed: {
+    loading() {
+      return this.$store.state.stack.cards.length == 0;
+    }
   },
 
   props: {

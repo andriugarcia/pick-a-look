@@ -6,11 +6,11 @@
           v-icon(color="black") fas fa-bars
         v-btn(icon, @click="$router.push({name: 'Home'})")
           img.ml-4(src="./assets/LogoSquare.svg", style="height: 40px")
-        v-menu(offset-y, v-if="logged")
+        v-menu(offset-y, v-if="email")
           template(v-slot:activator="{on}")
             div(style="border: 3px solid #1c1c1c; border-radius: 50%", v-on="on")
               v-avatar(color="#f50057", :size="36", v-ripple)
-                .font-weight-bold A
+                .font-weight-bold {{email[0].toUpperCase()}}
           v-list
             v-list-item(@click="logout")
               div Cerrar Sesión
@@ -43,6 +43,9 @@ export default Vue.extend({
   computed: {
     logged() {
       return this.$store.state.auth.logged;
+    },
+    email() {
+      return this.$store.state.auth.user.email
     },
   },
 

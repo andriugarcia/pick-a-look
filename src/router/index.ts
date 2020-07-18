@@ -11,6 +11,11 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
+    path: '/historial',
+    name: 'Historial',
+    component: () => import('../views/List.vue'),
+  },
+  {
     path: '/likes',
     name: 'Likes',
     component: () => import('../views/List.vue'),

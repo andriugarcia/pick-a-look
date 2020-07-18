@@ -6,7 +6,7 @@
     div(ref="infosection", style="position: absolute; bottom: 0; width: 100%;")
       v-fade-transition
         v-btn.mb-1.px-4.text-capitalize.font-weight-bold(v-show="card.description && !expanded", rounded, depressed, x-small, style="border: 2px solid black") Ver Más Info
-      div(style="width: 100%")
+      div(style="overflow: hidden")
         .triangle
       v-card.pt-n4.text-left.section(flat, tile, :ripple="false", style="background-color: #f50057", @click="expand", :class="{'collapsed': !expanded, 'expanded': expanded}")
         v-layout.pl-4(justify-space-between)
@@ -86,10 +86,10 @@ export default Vue.extend({
     max-height:460px;
   }
 
-  .triangle {
-    width: 0;
-    height: 0;
-    border-bottom: 30px solid #f50057;
-    border-right: 90vw solid transparent;
-  }
+.triangle {
+  width: 0;
+  height: 0;
+  border-bottom: 30px solid #f50057;
+  border-right: 95vw solid transparent;
+}
 </style>
