@@ -66,8 +66,13 @@ export default Vue.extend({
 <style lang="scss">
   @import "./styles/mixins.scss";
   @import "./styles/typography.scss";
+  @import "./styles/index.scss";
 
   #app {
     text-align: center;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 </style>

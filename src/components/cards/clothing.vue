@@ -13,7 +13,7 @@
           .mr-2
             h3 {{card.brand}}
             p {{card.name | truncate}}
-          .mb-5.mt-4.py-3.px-4(v-if="card.price != '0€'", style="background-color: black; border-radius: 50px 0 0 50px;", align-center)
+          .mb-5.mt-4.py-3.px-4(v-if="card.price != '0€'", style="background-color: black; max-height: 52px; border-radius: 50px 0 0 50px;", align-center)
             h3.white--text {{card.price}}
         .px-4.mt-4
           .font-weight-bold Descripción
@@ -90,6 +90,6 @@ export default Vue.extend({
   width: 0;
   height: 0;
   border-bottom: 30px solid #f50057;
-  border-right: 95vw solid transparent;
+  border-right: 600px solid transparent;
 }
 </style>

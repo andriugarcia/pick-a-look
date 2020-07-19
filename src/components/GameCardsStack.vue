@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(style="height: 64vh")
+  .cardsheight
     .ma-4(v-if="loading")
       v-skeleton-loader(transition="scale-transition", type="image")
       v-skeleton-loader(transition="scale-transition", type="card")
@@ -44,5 +44,10 @@ export default {
   // display: flex;
   margin: 16px;
   width: calc(100% - 32px);
+}
+
+.cardsheight {
+  // height: calc(100vh - 300px);
+  height: 70%;
 }
 </style>

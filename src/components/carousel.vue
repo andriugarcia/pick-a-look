@@ -115,13 +115,13 @@ export default {
 #slider {
   overflow-y: hidden;
   width: 100%;
-  height: 64vh;
+  height: 100%;
   background-color: white;
   // scroll-snap-type: y mandatory;
 }
 
 .img {
-  height: 52vh;
+  height: 60vh;
   //object-fit: contain;
 }
 

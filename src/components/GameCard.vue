@@ -130,7 +130,7 @@ $fs-card-title: 1.125em;
   will-change: transform, opacity;
 
   // height: 100vw;
-  height: 64vh;
+  height: 70%;
   &.isCurrent {
     pointer-events: auto;
   }

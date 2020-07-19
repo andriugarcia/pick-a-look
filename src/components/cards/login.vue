@@ -6,7 +6,7 @@
       v-text-field.mx-6(solo, placeholder="Contraseña", v-model="password", type="password", @keydown.enter="signin")
       section.mx-6
         v-btn(color="white", block, light, :loading="loading", @click="signin") Iniciar Sesión
-      .text-center.mt-4.white--text O inicia a través de
+      .text-center.mt-6.white--text O inicia a través de
       v-layout.mx-6(justify-center)
         .mx-2
           v-btn(icon, large, v-google-signin-button="clientId")
@@ -24,10 +24,11 @@
           v-btn(icon, large)
             v-icon(large).white--text fab fa-facebook
           .white--text Facebook
-    v-sheet.pb-4(v-if="flap", style="position: absolute; bottom: -60px; left: 0; right: 0", color="tyellow")
-      h2.mt-2 O Regístrate
+    v-sheet.pb-4(v-if="flap", color="tyellow")
       section.mx-6.mt-2
-        v-btn(color="black", block, dark, :loading="loading", @click="toSignup") Registrate
+        v-layout(justify-center, column)
+          h2.mt-2 O Regístrate
+          v-btn(color="black", block, dark, :loading="loading", @click="toSignup") Registrate
 
 </template>
 
