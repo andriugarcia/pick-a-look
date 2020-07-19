@@ -4,7 +4,7 @@
       h1.pt-6 Registrate
       v-text-field.mt-6.mx-6(solo, placeholder="Email", v-model="email")
       v-text-field.mx-6(solo, placeholder="Contraseña", v-model="password", type="password", @keydown.enter="signup")
-      section.mx-6
+      section.mx-6.pb-4
         v-btn(color="black", block, dark, :loading="loading", @click="signup") Registrate
     v-sheet(v-if="flap", color="tblue", style="position: absolute; bottom: 0; left: 0; right: 0")
       section.ma-6

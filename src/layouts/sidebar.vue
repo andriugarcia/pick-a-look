@@ -11,40 +11,42 @@
         v-list
           v-list-item(@click="logout")
             div Cerrar Sesión
-    .overline.mt-8.pl-6 TUS ACCIONES
-    v-divider.my-4
-    v-list-item(@click="toList('Historial')")
-      v-list-item-avatar(color="tgreen")
-        v-icon.white--text(small) fas fa-tshirt
-      v-list-item-content
-        v-list-item-title Prendas que has votado
-    v-list-item(@click="toList('Favorites')")
-      v-list-item-avatar(color="tyellow")
-        v-icon.white--text(small) fas fa-star
-      v-list-item-content
-        v-list-item-title Tus prendas favoritas
-    v-list-item(@click="toList('Bought')")
-      v-list-item-avatar(color="tblue")
-        v-icon.white--text(small) fas fa-shopping-cart
-      v-list-item-content
-        v-list-item-title Prendas que has comprado
-    .overline.mt-8.pl-6 FILTROS
-    v-divider.my-4
-    v-btn-toggle.mx-4(borderless, group, v-model="genre", @change="uploadGenre", color="hookle accent-3")
-      v-btn(value="men")
-        span Hombre
-      v-btn(value="women")
-        span Mujer
-      v-btn(value="all")
-        span Todo
-    v-autocomplete.mt-3.mx-6(solo, placeholder="Añadir Filtro", @change="uploadFilters", color="hookle", chips, cache-items, multiple, :items="filterList", v-model="userFilters", item-text="name", item-value="name")
-      template(v-slot:selection="data")
-        v-chip(v-bind="data.attrs", small, label, dark, color="hookle", :input-value="data.selected", @click="data.select") {{data.item.name | toSpanish}}
-      template(v-slot:item="data")
-        template(v-if="typeof data.item !== 'object'")
-          v-list-item-content(v-text="data.item")
-        template(v-else)
-          v-list-item-content {{data.item.name | toSpanish}}
+    v-alert.mt-4(v-if="!logged", color="info", text) Necesitas iniciar sesión para ver tu historial
+    div(v-else)
+      .overline.mt-8.pl-6 TUS ACCIONES
+      v-divider.my-4
+      v-list-item(@click="toList('Historial')")
+        v-list-item-avatar(color="tgreen")
+          v-icon.white--text(small) fas fa-tshirt
+        v-list-item-content
+          v-list-item-title Prendas que has votado
+      v-list-item(@click="toList('Favorites')")
+        v-list-item-avatar(color="tyellow")
+          v-icon.white--text(small) fas fa-star
+        v-list-item-content
+          v-list-item-title Tus prendas favoritas
+      v-list-item(@click="toList('Bought')")
+        v-list-item-avatar(color="tblue")
+          v-icon.white--text(small) fas fa-shopping-cart
+        v-list-item-content
+          v-list-item-title Prendas que has comprado
+      .overline.mt-8.pl-6 FILTROS
+      v-divider.my-4
+      v-btn-toggle.mx-4(borderless, group, v-model="genre", @change="uploadGenre", color="hookle accent-3")
+        v-btn(value="men")
+          span Hombre
+        v-btn(value="women")
+          span Mujer
+        v-btn(value="all")
+          span Todo
+      v-autocomplete.mt-3.mx-6(solo, placeholder="Añadir Filtro", @change="uploadFilters", color="hookle", chips, cache-items, multiple, :items="filterList", v-model="userFilters", item-text="name", item-value="name")
+        template(v-slot:selection="data")
+          v-chip(v-bind="data.attrs", small, label, dark, color="hookle", :input-value="data.selected", @click="data.select") {{data.item.name | toSpanish}}
+        template(v-slot:item="data")
+          template(v-if="typeof data.item !== 'object'")
+            v-list-item-content(v-text="data.item")
+          template(v-else)
+            v-list-item-content {{data.item.name | toSpanish}}
     .skew.bottom(style="width: 100%")
       v-layout.wrapper.pb-2(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")
         i.white--text.font-weight-bold Done with

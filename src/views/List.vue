@@ -1,10 +1,10 @@
 <template lang="pug">
   #List
     v-subheader.mt-6.hookle--text(style="font-size: 1.2em") {{ getHeader() }}
-    v-layout.mt-2(v-if="$route.name == 'Historial'", align-center)
-      v-flex(xs12, md-3)
+    v-layout.mt-2(v-if="$route.name == 'Historial'", align-center, wrap)
+      v-flex(xs12, lg-3)
         v-subheader Ordenar por
-      v-flex(xs12, md-9)
+      v-flex(xs12, lg-9)
         v-overflow-btn(label="Ordenar por", :items="historicalOrderList", v-model="historicalOrder", color="hookle", item-color="hookle")
     v-layout(justify-center, v-if="clothes.length == 0")
       v-progress-circular.mt-12(indeterminate, color="hookle", size="56")
@@ -18,7 +18,7 @@
             .mr-2
               strong(style="font-size: .8em") {{clothing.brand | truncate(40)}}
               div(style="font-size: .8em") {{clothing.name | truncate(40)}}
-            .mb-5.mt-4.py-1.px-2(v-if="clothing.price != '0€'", style="background-color: black; border-radius: 50px 0 0 50px;", align-center)
+            .mb-5.mt-4.py-1.px-2(v-if="clothing.price != '0€'", style="background-color: black; max-height: 36px; border-radius: 50px 0 0 50px;", align-center)
               b.white--text(style="font-size: .8em") {{clothing.price}}
 </template>
 

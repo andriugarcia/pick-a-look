@@ -92,7 +92,7 @@ export default {
       commit('clear');
       commit('stack/clear', {}, { root: true });
       commit('setToken', '');
-      commit('setLogout', false);
+      commit('setLogged', false);
       commit('stack/updateCards', [
         {
           type: 'login',

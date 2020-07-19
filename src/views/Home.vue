@@ -45,13 +45,15 @@
                       @cardRejected="handleCardRejected",
                       @cardSkipped="handleCardSkipped",
                       @hideCard="removeCardFromDeck")
-      v-layout.mt-8.py-4(justify-center, align-center)
-        v-btn.mr-3(large, rounded, color="tblue", :disabled="buttonsDisabled", @click="buy")
-          v-icon.white--text fas fa-shopping-cart
-          .ml-2.text-capitalize.white--text.font-weight-bold Comprar
-        v-btn.ml-3(large, rounded, color="tyellow", :disabled="buttonsDisabled", @click="fav")
-          v-icon {{ favorite ? 'fas' : 'far' }} fa-star
-          .ml-2.text-capitalize.font-weight-bold Favorito
+      v-layout.mt-8.mx-8.py-4(justify-center, align-center)
+        v-flex.pr-3(xs6)
+          v-btn(large, rounded, color="tblue", :disabled="buttonsDisabled", block, @click="buy")
+            v-icon fas fa-shopping-cart
+            .ml-2.text-capitalize.font-weight-bold Comprar
+        v-flex.pl-3(xs6)
+          v-btn(large, rounded, color="tyellow", :disabled="buttonsDisabled", block, @click="fav")
+            v-icon {{ favorite ? 'fas' : 'far' }} fa-star
+            .ml-2.text-capitalize.font-weight-bold Favorito
       v-layout(justify-center)
         v-card(flat, style="border-radius: 40px")
           v-btn-toggle(rounded)
