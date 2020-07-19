@@ -136,7 +136,7 @@ export default {
       console.log('SIGNUP');
 
       try {
-        const { data } = await Axios.post('${process.env.VUE_APP_ENDPOINT}/signup', {
+        const { data } = await Axios.post(`${process.env.VUE_APP_ENDPOINT}/signup`, {
           email,
           password,
         });
