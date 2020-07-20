@@ -6,29 +6,25 @@
       v-text-field.mx-6(solo, placeholder="Contraseña", v-model="password", type="password", @keydown.enter="signin")
       section.mx-6
         v-btn(color="white", block, light, :loading="loading", @click="signin") Iniciar Sesión
-      .text-center.mt-6.white--text O inicia a través de
-      v-layout.mx-6(justify-center)
-        .mx-2
-          v-btn(icon, large, v-google-signin-button="clientId")
-            v-icon(large).white--text fab fa-google
-          .white--text Google
-        .mx-2
-          v-btn(icon, large)
-            v-icon(large).white--text fab fa-instagram
-          .white--text Instagram
-        .mx-2
-          v-btn(icon, large)
-            v-icon(large).white--text fab fa-twitter
-          .white--text Twitter
-        .mx-2
-          v-btn(icon, large)
-            v-icon(large).white--text fab fa-facebook
-          .white--text Facebook
+      .text-center.mt-6.white--text O entra a través de
+      v-layout.mx-6(justify-center, wrap)
+        v-btn.pl-1.mt-2(rounded, style="letter-spacing: 0", v-google-signin-button="clientId")
+          v-avatar(color="blue", size="30")
+            v-icon.white--text(small) fab fa-google
+          .text-capitalize.ml-2 Google
+        v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
+          v-avatar(color="black", size="30")
+            v-icon.white--text(small) fab fa-apple
+          .text-capitalize.ml-2 Apple
+        v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
+          v-avatar(color="pink", size="30")
+            v-icon.white--text(small) fab fa-instagram
+          .text-capitalize.ml-2 Instagram
     v-sheet.pb-4(v-if="flap", color="tyellow")
       section.mx-6.mt-2
         v-layout(justify-center, column)
           h2.mt-2 O Regístrate
-          v-btn(color="black", block, dark, :loading="loading", @click="toSignup") Registrate
+          v-btn(color="black", block, dark, @click="toSignup") Registrate
 
 </template>
 

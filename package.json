@@ -1,5 +1,5 @@
 {
-  "name": "clothes-tinder",
+  "name": "pick-a-look",
   "version": "0.1.0",
   "engines": {
     "node": "12.x"
@@ -23,6 +23,7 @@
     "vue-class-component": "^7.2.3",
     "vue-google-signin-button-directive": "^1.0.3",
     "vue-masonry-css": "^1.0.3",
+    "vue-meta": "^2.4.0",
     "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.1.6",
     "vuetify": "^2.2.11",

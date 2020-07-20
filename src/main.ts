@@ -5,6 +5,12 @@ import './registerServiceWorker.ts';
 import router from './router/index';
 import store from './store/index';
 import vuetify from './plugins/vuetify';
+import VueMeta from 'vue-meta'
+
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true
+})
 
 Vue.use(VueMasonry);
 

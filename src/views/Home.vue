@@ -6,14 +6,14 @@
           img.ma-4(style="height: 80vh; max-width: 100%; object-fit: cover;", :src="cards[0].pictures[pictureSelected]", :srcset="cards[0].srcsets[pictureSelected]")
           v-layout
             img.ma-4(v-for="(picture, i) in cards[0].pictures", :key="i", @mouseover="pictureSelected = i", style="width: 80px; height: 80px; object-fit: cover;", :class="{'hookleborder': i == pictureSelected}", :src="picture", :srcset="cards[0].srcsets[i]")
-        v-flex.text-left.pa-6(md5, style="position: relative")
+        v-flex.text-left.py-6.pl-6.pb-6(md5, style="position: relative")
           v-layout(align-center)
             h1 {{ cards[0].brand }}
             v-spacer
             .py-3.px-4(v-if="cards[0].price != '0€'", style="background-color: black; border-radius: 25px 0 0 25px;", align-center)
               h3.white--text {{cards[0].price}}
-          h3.mt-4 {{ cards[0].name }}
-          .mt-4 {{ cards[0].description }}
+          h3.mt-4.mr-3 {{ cards[0].name }}
+          .mt-4.mr-3 {{ cards[0].description }}
           div(style="position: absolute; bottom: 24px")  
             v-layout.mt-8.py-4(justify-center, align-center)
               v-flex.mr-1(xs6)
@@ -36,8 +36,8 @@
       div(v-else)
         v-layout.ma-12
           v-flex(xs7).text-left
-            .font-weight-bold(style="font-size: 2em;") Descubre tu Propio Estilo
-            strong(style="display: inline-block") 1. Vota las prendas dependiendo de si te gustan más o menos
+            .hookle--text(style="font-size: 6.2em; font-weight: 900; line-height: 110px; letter-spacing: -4px") DESCUBRE<br/>TU PROPIO<br/>ESTILO
+            strong.mt-4(style="display: inline-block") 1. Vota las prendas dependiendo de si te gustan más o menos
             strong(style="display: inline-block") 2. Aprenderemos de ti y te ofreceremos cada vez mejores prendas
             strong(style="display: inline-block") 3. Compra o guarda aquellas que más te gusten!
           v-flex(xs5)
@@ -198,21 +198,17 @@ export default Vue.extend({
     background-color: transparent !important;
   }
 
-.votebuttons {
-  transform: scale(.8);
-}
-
 .hookleborder {
   border: 4px solid #f50057;
 }
 
-@media only screen and (min-width: 310px) {
+@media only screen and (max-width: 380px) {
   .votebuttons {
     transform: scale(.8);
   }
 
 }
-@media only screen and (max-width: 310px) {
+@media only screen and (min-width: 380px) {
   .votebuttons {
     transform: scale(1);
   }
