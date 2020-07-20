@@ -153,7 +153,7 @@ export default Vue.extend({
     },
     buy() {
       this.$store.dispatch('stack/bought', this.cards[0].code);
-      window.open(`https://www.amazon.es${this.cards[0].url}&linkCode=ll1&tag=mouo-21&linkId=c7cee5388cfffae3e66db9880a2dab3f&language=es_ES`);
+      window.open(`https://www.amazon.es/dp/${this.cards[0].code}/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=pickalook-21&linkId=3256bb71ff80b01ea14cb534e7758283&language=es_ES`);
     },
     fav() {
       this.$store.dispatch('stack/vote', { code: this.cards[0].code, rating: 10 });

@@ -96,7 +96,7 @@ export default Vue.extend({
     buy(card) {
       console.log(card)
       this.$store.dispatch('stack/bought', card.code);
-      window.open(`https://www.amazon.es${card.url}&linkCode=ll1&tag=mouo-21&linkId=c7cee5388cfffae3e66db9880a2dab3f&language=es_ES`);
+      window.open(`https://www.amazon.es/dp/${card.code}/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=pickalook-21&linkId=3256bb71ff80b01ea14cb534e7758283&language=es_ES`);
     },
 
     getIcon() : string {
