@@ -61,8 +61,8 @@ export default {
           description: '',
           price: card.price,
           brand: card.brand,
-          pictures: [card.image, card.image, card.image],
-          srcsets: [card.srcset, card.srcset, card.srcset],
+          pictures: [card.image],
+          srcsets: [card.srcset],
           type: 'clothing',
           url: card.url,
         }));
