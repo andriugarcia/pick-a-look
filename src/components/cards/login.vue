@@ -12,14 +12,15 @@
           v-avatar(color="blue", size="30")
             v-icon.white--text(small) fab fa-google
           .text-capitalize.ml-2 Google
-        v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
+        //- v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
           v-avatar(color="black", size="30")
             v-icon.white--text(small) fab fa-apple
           .text-capitalize.ml-2 Apple
-        v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
+        //- v-btn.pl-1.mt-2.ml-2(rounded, style="letter-spacing: 0")
           v-avatar(color="pink", size="30")
             v-icon.white--text(small) fab fa-instagram
           .text-capitalize.ml-2 Instagram
+        div#appleid-signin(data-color="black", data-border="true", data-type="sign in")
     v-sheet.pb-4(v-if="flap", color="tyellow")
       section.mx-6.mt-2
         v-layout(justify-center, column)
@@ -72,6 +73,7 @@ export default Vue.extend({
       }, 50);
     },
     OnGoogleAuthSuccess (idToken) {
+      console.log(idToken)
       const result = this.$store.dispatch('auth/signinGoogle', idToken)
       if (result) {
         this.$emit('discard');

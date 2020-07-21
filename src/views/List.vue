@@ -11,7 +11,7 @@
     masonry(v-else, :cols="{default: 4, 1000: 3, 700: 2, 400: 1}")
       v-card.elevation-6.ma-2.mb-4(v-for="(clothing, i) in clothes", :key="i", hover, @click="buy(clothing)", flat)
         img(v-for="(picture, i) in clothing.pictures", style="width: 100%", :src="picture", :srcset="clothing.srcsets[i]")
-        v-card.text-left.pb-4.smallcard(style="height: 100%; position: relative", flat, color="#f50057", tile)
+        v-card.text-left.smallcard(style="height: 100%; position: relative", flat, color="#f50057", tile)
           div(style="overflow: hidden; position: absolute; top: -24px; left: 0; width: 100%")
             .triangle
           v-layout.pl-4(justify-space-between)
@@ -20,6 +20,12 @@
               div(style="font-size: .8em") {{clothing.name | truncate(40)}}
             .mb-5.mt-4.py-1.px-2(v-if="clothing.price != '0€'", style="background-color: black; max-height: 36px; border-radius: 50px 0 0 50px;", align-center)
               b.white--text(style="font-size: .8em") {{clothing.price}}
+          v-btn.mt-2(v-if="$route.name == 'Favorites'", tile, depressed, block, color="tyellow", @click.stop="")
+            v-icon(small) fas fa-star
+            .ml-2.text-capitalize(style="letter-spacing: 0") Quitar de Favoritos
+          v-btn.mt-2(v-else, tile, depressed, block, color="tblue")
+            v-icon(small) fas fa-shopping-cart
+            .ml-2.text-capitalize(style="letter-spacing: 0") Comprar
 </template>
 
 <script lang="ts">

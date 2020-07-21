@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-list.text-left(style="position: relative; height: 100vh")
+  v-list.text-left(style="position: sticky; top: 0; left: 0; height: 100vh")
     v-layout(justify-space-between, align-center)
       v-card.ml-6.mt-4(flat, @click="$router.push({path: '/'})")
         img(src="../assets/LogoText.svg", style="width: 140px")
@@ -51,11 +51,11 @@
     .bottom
       .triangle
       .footer(style="width: 100%")
-        v-layout.wrapper.pb-2(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")
+        v-layout.wrapper(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")
           i.white--text.font-weight-bold Done with
           v-icon.mx-2.white--text fas fa-fire-alt
           i.white--text.font-weight-bold by
-          v-chip.ml-2(color="white", @click="toTwitter")
+          v-chip.ml-2.mb-2(color="white", @click="toTwitter")
             div.hookle--text @VersyCreate
 </template>
 
@@ -169,7 +169,7 @@ export default Vue.extend({
     width: 0;
     height: 0;
     border-bottom: 30px solid #f50057;
-    border-right: 800px solid transparent;
+    border-right: 600px solid transparent;
   }
   .footer {
     width: 100%;

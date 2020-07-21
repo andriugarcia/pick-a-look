@@ -49,9 +49,16 @@ export default {
   actions: {
     async getUser({ commit }) {
       console.log("GETTING USER")
-      let {data} = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/getMe`)
-      console.log(data);
-      commit('setUser', data);
+      try {
+        let {data} = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/getMe`)
+        console.log(data);
+        commit('setUser', data);
+        commit('setLogged', true);
+      }
+      catch(err) {
+        commit('setLogged', false);
+        console.error(err);
+      }
     },
     async checkLogged({ commit, getters, dispatch }) {
       const token = getters.getToken;
@@ -61,8 +68,8 @@ export default {
           Axios.defaults.headers.common = {
             Authorization: `Bearer ${token}`,
           };
-          commit('setLogged', true);
           dispatch('getUser');
+          
           if (!(await dispatch('stack/fetch', {}, { root: true }))) {
             commit('stack/updateCards', [
               {
@@ -72,7 +79,6 @@ export default {
                 type: 'login',
               },
             ], { root: true });
-            commit('setLogged', false);
           }
         } catch (err) {
           console.error('La sesión ha caducado', err);
@@ -93,6 +99,7 @@ export default {
       commit('stack/clear', {}, { root: true });
       commit('setToken', '');
       commit('setLogged', false);
+      commit('setUser', {});
       commit('stack/updateCards', [
         {
           type: 'login',
@@ -104,7 +111,6 @@ export default {
         commit('setToken', token);
         await dispatch('getUser');
         const result = await dispatch('stack/fetch', {}, { root: true });
-        commit('setLogged', result);
         return result;
       }
       catch(err) {
@@ -121,11 +127,10 @@ export default {
           password,
         });
 
-        console.log(data);
+        console.log(data.token);
         commit('setToken', data.token);
         await dispatch('getUser');
         const result = await dispatch('stack/fetch', {}, { root: true });
-        commit('setLogged', result);
         return result;
       } catch (err) {
         console.log(err);
@@ -143,7 +148,6 @@ export default {
 
         console.log(data);
         commit('setToken', data.token);
-        commit('setLogged', true);
         await dispatch('getUser');
         dispatch('stack/fetchPopulars', {}, { root: true });
         return true;
