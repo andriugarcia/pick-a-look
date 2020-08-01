@@ -13,7 +13,10 @@
                 .font-weight-bold {{email[0].toUpperCase()}}
           v-list
             v-list-item(@click="logout")
-              div Cerrar Sesión
+              div $t("logout")
+            v-list-item(@click="downloadApp")
+              v-icon.hookle--text fas fa-arrow-circle-down
+              .ml-2.hookle--text $t("downloadApp")
     v-content
       v-layout
         v-flex(xs3, v-if="$vuetify.breakpoint.mdAndUp")
@@ -28,6 +31,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Sidebar from '@/layouts/sidebar.vue';
+import Cookies from '@/services/cookies';
 
 export default Vue.extend({
   name: 'App',
@@ -62,14 +66,46 @@ export default Vue.extend({
   },
 
   async mounted() {
-    await this.$store.dispatch('auth/checkLogged');
+    console.log(Cookies.getCookie("country"))
+    if (Cookies.getCookie("country") == "") {
+      let response = await fetch('https://ipapi.co/json/')
+      let data = await response.json();
+      Cookies.setCookie("country", data.country, 365)
+    }
+
+    this.$store.commit('auth/setCountry', Cookies.getCookie("country"))
+    
+    await this.$store.dispatch('auth/checkLogged')
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.$store.state.deferredPrompt = e;
+      this.$store.state.appNotInstalled = true;
+    });
+    window.addEventListener('appinstalled', (evt) => {
+      this.$store.state.appNotInstalled = false;
+    });
   },
 
   methods: {
 
     logout() : void {
       this.$store.dispatch('auth/logout');
+      this.$router.push({name: 'Home'})
     },
+
+    downloadApp() {
+      this.$store.state.deferredPrompt.prompt();
+      this.$store.state.deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          this.$store.state.appNotInstalled = false;
+        } else {
+          this.$store.state.appNotInstalled = true;
+        }
+      });
+    }
 
   },
 });

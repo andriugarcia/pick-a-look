@@ -17,10 +17,10 @@ export default {
       })
     },
 
-    async historial(_, order) : Promise<Array<Object>> {
+    async historial(_, {order, page}) : Promise<Array<Object>> {
       console.log('HISTORIAL', order);
       try {
-        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/historial/${order}`);
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/historial/${order}/${page}`);
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',
@@ -82,9 +82,9 @@ export default {
       }
     },
 
-    async bought() : Promise<Array<Object>> {
+    async bought(_, page) : Promise<Array<Object>> {
       try {
-        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/bought`);
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/bought/${page}`);
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',
@@ -103,9 +103,9 @@ export default {
       }
     },
 
-    async favorites() : Promise<Array<Object>> {
+    async favorites(_, page) : Promise<Array<Object>> {
       try {
-        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/favorites`);
+        const { data } = await Axios.get(`${process.env.VUE_APP_ENDPOINT}/favorites/${page}`);
         const clothes = data.map((card) => ({
           name: card.name,
           description: '',

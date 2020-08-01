@@ -9,6 +9,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    deferredPrompt: {}, // Almacena la gestión instalación de App
+    appNotInstalled: false,
   },
   mutations: {
   },

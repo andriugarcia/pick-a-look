@@ -140,5 +140,16 @@ export default {
         console.error(err);
       }
     },
+
+    async unfav(_, clothing) {
+      console.log(clothing);
+      try {
+        await Axios.post(`${process.env.VUE_APP_ENDPOINT}/unfav`, {
+          clothing,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    },
   },
 };

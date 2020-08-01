@@ -16,7 +16,8 @@
 
         v-layout(v-else)
           div(style="width: 60%")
-            img.ma-4(style="height: 80vh; max-width: 100%; object-fit: cover;", :src="cards[0].pictures[pictureSelected]", :srcset="cards[0].srcsets[pictureSelected]")
+            v-layout.ma-4(style="height: 80vh", align-center)
+              v-img(contain, style="max-height: 80vh; object-fit: cover;", :src="cards[0].pictures[pictureSelected]", :srcset="cards[0].srcsets[pictureSelected]")
             v-layout
               img.ma-4(v-for="(picture, i) in cards[0].pictures", :key="i", @mouseover="pictureSelected = i", style="width: 80px; height: 80px; object-fit: cover;", :class="{'hookleborder': i == pictureSelected}", :src="picture", :srcset="cards[0].srcsets[i]")
           v-flex.text-left.py-6.pl-6.pb-6(md5, style="position: relative")
@@ -27,16 +28,22 @@
                 h3.white--text {{cards[0].price}}
             h3.mt-4.mr-3 {{ cards[0].name }}
             .mt-4.mr-3 {{ cards[0].description }}
+            //- v-btn.text-capitalize(rounded, small, style="letter-spacing: 0") 
+              v-icon(small) fas fa-plus
+              .ml-2 Ver más prendas de esta marca
+            //- v-btn.text-capitalize(rounded, small, style="letter-spacing: 0") 
+              v-icon(small) fas fa-plus
+              .ml-2 Ver prendas similares
             div(style="position: absolute; bottom: 24px")  
               v-layout.mt-8.py-4(justify-center, align-center)
                 v-flex.mr-1(xs6)
                   v-btn(large, block, rounded, color="tyellow", :disabled="buttonsDisabled", @click="fav")
                     v-icon(small) {{ favorite ? 'fas' : 'far' }} fa-star
-                    .ml-2.text-capitalize.font-weight-bold Favorito
+                    .ml-2.text-capitalize.font-weight-bold {{$t("favorite")}}
                 v-flex.ml-1(xs6)
                   v-btn(large, block, rounded, color="tblue", :disabled="buttonsDisabled", @click="buy")
                     v-icon.white--text(small) fas fa-shopping-cart
-                    .ml-2.text-capitalize.white--text.font-weight-bold Comprar
+                    .ml-2.text-capitalize.white--text.font-weight-bold {{$t("buy")}}
               v-card.mt-4(color="grey lighten-3", flat, style="border-radius: 40px")
                 v-layout(style="cursor: pointer", justify-center)
                   .py-1.px-3(style="font-size: 1.8em", :class="{'selected-left': select == -3, 'disabled': buttonsDisabled}", @mouseup="vote(2)", @mousedown="select = -3", @mousemove="select = -3", @touchmove="select = -3") 😭
@@ -49,10 +56,10 @@
       div(v-else)
         v-layout.ma-12
           v-flex(xs7).text-left
-            .hookle--text(style="font-size: 6.2em; font-weight: 900; line-height: 110px; letter-spacing: -4px") DESCUBRE<br/>TU PROPIO<br/>ESTILO
-            strong.mt-4(style="display: inline-block") 1. Vota las prendas dependiendo de si te gustan más o menos
-            strong(style="display: inline-block") 2. Aprenderemos de ti y te ofreceremos cada vez mejores prendas
-            strong(style="display: inline-block") 3. Compra o guarda aquellas que más te gusten!
+            .hookle--text(style="font-size: 6.2em; font-weight: 900; line-height: 100px; transform:scaleY(1.15); letter-spacing: -3px") {{$t("discover")}}<br/>{{$t("yourOwn")}}<br/>{{$t("style")}}
+            strong.mt-4(style="display: inline-block") 1. {{$t("stepOne")}}
+            strong(style="display: inline-block") 2. {{$t("stepTwo")}}
+            strong(style="display: inline-block") 3. {{$t("stepThree")}}
           v-flex(xs5)
             login(:flap="false")
             signup.mt-2(:flap="false")
@@ -67,11 +74,11 @@
           v-flex.pr-2(xs6)
             v-btn(rounded, color="tyellow", :disabled="buttonsDisabled", block, @click="fav")
               v-icon(small) {{ favorite ? 'fas' : 'far' }} fa-star
-              .ml-2.text-capitalize.font-weight-bold Favorito
+              .ml-2.text-capitalize.font-weight-bold {{$t("favorite")}}
           v-flex.pl-2(xs6)
             v-btn(rounded, color="tblue", :disabled="buttonsDisabled", block, @click="buy")
               v-icon(small) fas fa-shopping-cart
-              .ml-2.text-capitalize.font-weight-bold Comprar
+              .ml-2.text-capitalize.font-weight-bold {{$t("buy")}}
         v-layout(justify-center)
           v-btn-toggle.votebuttons(rounded)
             v-btn(@mouseup="vote(-3)", style="font-size: 1.4em") 😭
@@ -82,7 +89,7 @@
             v-btn(@mouseup="vote(2)", style="font-size: 1.4em") 😁
             v-btn(@mouseup="vote(3)", style="font-size: 1.4em") 😍
     v-snackbar(:timeout="1000", :value="favorite", absolute, bottom, color="tyellow", dark, text) 
-      .black--text Guardada en Favoritos
+      .black--text {{$t("savedFavorites")}}
 </template>
 
 <script lang="ts">
@@ -167,9 +174,13 @@ export default Vue.extend({
       window.open(`https://www.amazon.es/dp/${this.cards[0].code}/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=pickalook-21&linkId=3256bb71ff80b01ea14cb534e7758283&language=es_ES`);
     },
     fav() {
-      this.$store.dispatch('stack/vote', { code: this.cards[0].code, rating: 10 });
-      this.$store.dispatch('stack/fav', this.cards[0].code);
-      this.favorite = true;
+      if (this.favorite) {
+        this.$store.dispatch('stack/unfav', this.cards[0].code);
+        this.favorite = false;
+      } else {
+        this.$store.dispatch('stack/fav', this.cards[0].code);
+        this.favorite = true;
+      }
     },
   },
 

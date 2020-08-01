@@ -10,51 +10,58 @@
               .font-weight-bold {{email[0].toUpperCase()}}
         v-list
           v-list-item(@click="logout")
-            div Cerrar Sesión
-    v-alert.mt-4(v-if="!logged", color="info", text) Necesitas iniciar sesión para ver tu historial
+            div {{$t("logout")}}
+          v-list-item(@click="downloadApp")
+            v-icon.hookle--text fas fa-arrow-circle-down
+            .ml-2.hookle--text {{$t("downloadApp")}}
+    v-alert.mt-4(v-if="!logged", color="info", text) {{$t("needSignin")}}
     div(v-else)
-      .overline.mt-4.pl-6 TUS ACCIONES
+      .overline.mt-4.pl-6 {{$t("yourActions")}}
       v-divider.my-3
       v-list-item(@click="toList('Historial')")
         v-list-item-avatar(color="tgreen")
           v-icon.white--text(small) fas fa-tshirt
         v-list-item-content
-          v-list-item-title Prendas que has votado
+          v-list-item-title {{$t("votedClothes")}}
       v-list-item(@click="toList('Favorites')")
         v-list-item-avatar(color="tyellow")
           v-icon.white--text(small) fas fa-star
         v-list-item-content
-          v-list-item-title Tus prendas favoritas
+          v-list-item-title {{$t("favoriteClothes")}}
       v-list-item(@click="toList('Bought')")
         v-list-item-avatar(color="tblue")
           v-icon.white--text(small) fas fa-shopping-cart
         v-list-item-content
-          v-list-item-title Prendas que has comprado
-      .overline.mt-6.pl-6 FILTROS
+          v-list-item-title {{$t("boughtClothes")}}
+      .overline.mt-6.pl-6 {{$t("filters")}}
       v-divider.my-4
       v-layout(justify-center)
         v-btn-toggle.mx-4(borderless, group, v-model="genre", @change="uploadGenre", color="hookle accent-3")
           v-btn(value="men", small)
-            span Hombre
+            span {{$t("men")}}
           v-btn(value="women", small)
-            span Mujer
+            span {{$t("women")}}
           v-btn(value="all", small)
-            span Todo
-      v-autocomplete.mt-3.mx-6(solo, item-color="hookle", placeholder="Añadir Filtro", @change="uploadFilters", color="hookle", chips, cache-items, multiple, :items="filterList", v-model="userFilters", item-text="name", item-value="name")
+            span {{$t("all")}}
+      v-autocomplete.mt-3.mx-6(solo, item-color="hookle", :placeholder="$t('addFilter')", @change="uploadFilters", color="hookle", chips, cache-items, multiple, :items="filterList", v-model="userFilters", item-text="name", item-value="name")
         template(v-slot:selection="data")
-          v-chip(v-bind="data.attrs", small, label, dark, color="hookle", :input-value="data.selected", @click="data.select") {{data.item.name | toSpanish}}
+          v-chip(v-bind="data.attrs", small, label, dark, color="hookle", :input-value="data.selected", @click="data.select") {{toSpanish(data.item.name)}}
         template(v-slot:item="data")
           template(v-if="typeof data.item !== 'object'")
             v-list-item-content(v-text="data.item")
           template(v-else)
-            v-list-item-content {{data.item.name | toSpanish}}
+            v-list-item-content {{toSpanish(data.item.name)}}
     .bottom
+      v-layout(justify-center)
+        v-btn.mb-4(text, color="hookle", large)
+          v-icon fas fa-arrow-circle-down
+          .ml-2 {{$t('downloadApp')}}
       .triangle
       .footer(style="width: 100%")
         v-layout.wrapper(justify-center, align-center, style="font-family: 'Jost', 'Avenir', Helvetica, Arial, sans-serif")
-          i.white--text.font-weight-bold Done with
+          i.white--text.font-weight-bold {{$t("doneWith")}}
           v-icon.mx-2.white--text fas fa-fire-alt
-          i.white--text.font-weight-bold by
+          i.white--text.font-weight-bold {{$t("by")}}
           v-chip.ml-2.mb-2(color="white", @click="toTwitter")
             div.hookle--text @VersyCreate
 </template>
@@ -87,48 +94,47 @@ export default Vue.extend({
       }
     }
   },
-  data: () => ({
+  data: (context) => ({
     filterList: [
-      { header: 'Categoría' },
+      { header: context.$t("categorie") },
       { divider: true },
-      { name: 'dress', group: 'Categoría'},
-      { name: 'accessories', group: 'Categoría'},
-      { name: 'hat', group: 'Categoría'},
-      { name: 'sweatshirt', group: 'Categoría'},
-      { name: 'scarf', group: 'Categoría'},
-      { name: 't-shirt', group: 'Categoría'},
-      { name: 'shirt', group: 'Categoría'},
+      { name: 'dress', group: context.$t("categorie")},
+      { name: 'accessories', group: context.$t("categorie")},
+      { name: 'hat', group: context.$t("categorie")},
+      { name: 'sweatshirt', group: context.$t("categorie")},
+      { name: 'scarf', group: context.$t("categorie")},
+      { name: 't-shirt', group: context.$t("categorie")},
+      { name: 'shirt', group: context.$t("categorie")},
     ]
   }),
 
-  filters: {
+  methods: {
     toSpanish(value) {
       const str = value.toString();
+      console.log(this);
       switch (str) {
         case 'men':
-          return 'Hombre';
+          return this.$t('men');
         case 'women':
-          return 'Mujer';
+          return this.$t('women');
         case 'dress':
-          return 'Vestido';
+          return this.$t('dress');
         case 'accessories':
-          return 'Accesorios';
+          return this.$t('accessories');
         case 'hat':
-          return 'Sombreros';
+          return this.$t('hat');
         case 'sweatshirt':
-          return 'Sudaderas';
+          return this.$t('sweatshirt');
         case 'scarf':
-          return 'Bufandas';
+          return this.$t('scarf');
         case 't-shirt':
-          return 'Camisetas';
+          return this.$t('t-shirt');
         case 'shirt':
-          return 'Camisas';
+          return this.$t('shirt');
         default:
-          return 'Otros';
+          return this.$t('other');
       }
-    }
-  },
-  methods: {
+    },
     async uploadFilters() {
       console.log('Uploading filters');
       await this.$store.dispatch('list/updateFilters', this.userFilters);
@@ -148,10 +154,21 @@ export default Vue.extend({
     },
     logout() : void {
       this.$store.dispatch('auth/logout');
+      this.$router.push({name: 'Home'})
     },
     toTwitter() : void {
       window.open('https://twitter.com/VersyCreate');
     },
+    downloadApp() {
+      this.$store.state.deferredPrompt.prompt();
+      this.$store.state.deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          this.$store.state.appNotInstalled = false;
+        } else {
+          this.$store.state.appNotInstalled = true;
+        }
+      });
+    }
   },
 });
 

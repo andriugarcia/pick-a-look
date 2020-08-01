@@ -4,7 +4,7 @@
   #carousel
     #slider(style="", ref="scroll")
       #content(ref="content")
-        img.img(v-for="(img, i) in src", :key="i", :src="img", :srcset="srcsets[i]", alt="Prenda")
+        v-img.img(v-for="(img, i) in src", contain, :key="i", :src="img", :srcset="srcsets[i]", alt="Prenda")
         //- v-img.img(v-for="(img, i) in src", :key="i", :src="img", :srcset="srcsets[i]", contain, alt="Prenda")
     v-layout.ml-3.mt-5(v-if="src.length > 1", column, align-center, style="position: absolute; top: 32%; left: 0px")
       .mb-1(v-for="i in src.length", :key="i")
@@ -121,7 +121,8 @@ export default {
 }
 
 .img {
-  height: 60vh;
+  height: 52vh;
+  width: 100%;
   //object-fit: contain;
 }
 
