@@ -66,7 +66,7 @@
             div.hookle--text @VersyCreate
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -77,6 +77,14 @@ export default Vue.extend({
     email() {
       return this.$store.state.auth.user.email
     },
+    genre: {
+      get() {
+        return this.$store.state.auth.user.genre
+      },
+      set(value) {
+        this.$store.commit('auth/setGenre', value)
+      }
+    },
     userFilters: {
       get() {
         return this.$store.state.auth.user.filters
@@ -85,14 +93,6 @@ export default Vue.extend({
         this.$store.commit('auth/setFilters', value)
       }
     },
-    genre: {
-      get() {
-        return this.$store.state.auth.user.genre
-      },
-      set(value) {
-        this.$store.commit('auth/setGenre', value)
-      }
-    }
   },
   data: (context) => ({
     filterList: [
@@ -147,16 +147,16 @@ export default Vue.extend({
       this.$store.commit('stack/clear');
       await this.$store.dispatch('stack/fetch');
     },
-    toList(r) : void {
+    toList(r) {
       this.$router.push({
         name: r,
       });
     },
-    logout() : void {
+    logout() {
       this.$store.dispatch('auth/logout');
       this.$router.push({name: 'Home'})
     },
-    toTwitter() : void {
+    toTwitter() {
       window.open('https://twitter.com/VersyCreate');
     },
     downloadApp() {

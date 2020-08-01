@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.7a7490f98dbe980933c4ce16d3614936.js"
+  "/precache-manifest.6fb5fd35276e183acc15d78ec847e1df.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "clothes-tinder"});
+workbox.core.setCacheNameDetails({prefix: "pick-a-look"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
